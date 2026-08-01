@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@plugin "daisyui";
+body{
+  background: url(./assets/floral-arrangement-against-blue-background-photo\ \(1\).jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
