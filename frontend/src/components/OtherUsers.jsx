@@ -1,30 +1,19 @@
 import React from "react";
 import OtherUser from "./OtherUser";
+import useGetOtherUsers from "../hooks/useGetOtherUsers";
+import { useSelector } from "react-redux";
 
 const OtherUsers = () => {
-  const otherUsers = [
-    {
-      _id: "1",
-      fullName: "Rahul Sharma",
-      profilePhoto: "https://i.pravatar.cc/150?img=1",
-    },
-    {
-      _id: "2",
-      fullName: "Priya Singh",
-      profilePhoto: "https://i.pravatar.cc/150?img=2",
-    },
-    {
-      _id: "3",
-      fullName: "Aman Gupta",
-      profilePhoto: "https://i.pravatar.cc/150?img=3",
-    },
-  ];
+  // my custom hook
+  useGetOtherUsers();
+  const { otherUsers } = useSelector((store) => store.user);
+  if (!otherUsers) return; // early return in react
 
   return (
     <div className="overflow-auto flex-1">
-      {otherUsers.map((user) => (
-        <OtherUser key={user._id} user={user} />
-      ))}
+      {otherUsers?.map((user) => {
+        return <OtherUser key={user._id} user={user} />;
+      })}
     </div>
   );
 };
