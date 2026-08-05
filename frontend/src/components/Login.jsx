@@ -38,45 +38,70 @@ const Login = () => {
     });
   };
   return (
-    <div className="min-w-96 mx-auto">
-      <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100">
-        <h1 className="text-3xl font-bold text-center">Login</h1>
-        <form onSubmit={onSubmitHandler} action="">
-          <div>
-            <label className="label p-2">
-              <span className="text-base label-text">Username</span>
+    <div className="min-h-screen flex items-center justify-center">
+      <div
+        className="
+        w-full
+        max-w-md
+        rounded-2xl
+        border
+        border-white/20
+        bg-white/10
+        backdrop-blur-xl
+        shadow-2xl
+        p-8
+      "
+      >
+        <h1 className="text-4xl font-bold text-center text-white mb-8">
+          Login
+        </h1>
+
+        <form onSubmit={onSubmitHandler}>
+          <div className="mb-4">
+            <label className="label">
+              <span className="label-text text-white">Username</span>
             </label>
+
             <input
               value={user.username}
               onChange={(e) => setUser({ ...user, username: e.target.value })}
-              className="w-full input input-bordered h-10"
+              className="input input-bordered w-full bg-white/20 border-white/20 text-white placeholder:text-gray-300"
               type="text"
               placeholder="Username"
             />
           </div>
-          <div>
-            <label className="label p-2">
-              <span className="text-base label-text">Password</span>
+
+          <div className="mb-6">
+            <label className="label">
+              <span className="label-text text-white">Password</span>
             </label>
+
             <input
               value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
-              className="w-full input input-bordered h-10"
+              className="input input-bordered w-full bg-white/20 border-white/20 text-white placeholder:text-gray-300"
               type="password"
               placeholder="Password"
             />
           </div>
-          <p className="text-center my-2">
-            Don't have an account? <Link to="/signup"> signup </Link>
-          </p>
-          <div>
-            <button
-              type="submit"
-              className="btn btn-block btn-sm mt-2 border border-slate-700"
+
+          <p className="text-center mb-6">
+            <span className="text-gray-300">Don't have an account? </span>
+
+            <Link
+              to="/signup"
+              className="text-white font-semibold hover:text-cyan-300 transition"
             >
-              Login
-            </button>
-          </div>
+              Signup
+            </Link>
+          </p>
+
+          <button
+            type="submit"
+            className="w-full py-3 rounded-xl bg-white/15 backdrop-blur-lg border border-white/20 text-white font-semibold shadow-xl hover:bg-white/25 transition duration-300"
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>
