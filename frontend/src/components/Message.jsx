@@ -3,40 +3,50 @@ import { useSelector } from "react-redux";
 
 const Message = ({ message }) => {
   const scroll = useRef();
+
   const { authUser, selectedUser } = useSelector((store) => store.user);
 
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
-  const isMyMessage = message.isMe;
-
   return (
     <div
       ref={scroll}
-      className={`chat ${isMyMessage ? "chat-end" : "chat-start"}`}
+      className={`chat ${
+        message?.senderId === authUser?._id ? "chat-end" : "chat-start"
+      }`}
     >
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img
             alt="profile"
             src={
-              isMyMessage ? authUser?.profilePhoto : selectedUser?.profilePhoto
+              message?.senderId === authUser?._id
+                ? authUser?.profilePhoto
+                : selectedUser?.profilePhoto
             }
           />
         </div>
       </div>
 
       <div className="chat-header">
-        <time className="text-xs opacity-50 text-white">12:45</time>
+        <time className="text-xs opacity-50 text-white">
+          {new Date(message.createdAt).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </time>
       </div>
 
       <div
         className={`chat-bubble ${
-          !isMyMessage ? "bg-gray-200 text-black" : ""
+          message?.senderId === authUser?._id
+            ? "bg-green-400 text-white"
+            : "bg-gray-200 text-black"
         }`}
       >
-        {message.message}
+        {message?.message}
       </div>
     </div>
   );
