@@ -32,21 +32,11 @@ const Sidebar = () => {
       console.log(error);
     }
   };
-  const searchSubmitHandler = (e) => {
-    e.preventDefault();
-    const conversationUser = otherUsers?.find((user) =>
-      user.fullName.toLowerCase().includes(search.toLowerCase()),
-    );
-    if (conversationUser) {
-      dispatch(setOtherUsers([conversationUser]));
-    } else {
-      toast.error("User not found!");
-    }
-  };
+
   return (
     <div className="w-[320px] border-r border-white/20 p-4 flex flex-col bg-transparent">
       <form
-        onSubmit={searchSubmitHandler}
+        onSubmit={(e) => e.preventDefault()}
         action=""
         className="flex items-center gap-2"
       >
@@ -62,7 +52,7 @@ const Sidebar = () => {
         </button>
       </form>
       <div className="divider px-3"></div>
-      <OtherUsers />
+      <OtherUsers search={search} />
       <div className="mt-2">
         <button onClick={logoutHandler} className="btn btn-sm">
           Logout
