@@ -10,25 +10,21 @@ const Message = ({ message }) => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  const isMyMessage = String(message?.senderId) === String(authUser?._id);
+
   return (
     <div
       ref={scroll}
-      className={`chat ${
-        message?.senderId === authUser?._id ? "chat-end" : "chat-start"
-      }`}
+      className={`chat ${isMyMessage ? "chat-end" : "chat-start"}`}
     >
-      <div className="chat-image avatar">
-        <div className="w-10 rounded-full">
-          <img
-            alt="profile"
-            src={
-              message?.senderId === authUser?._id
-                ? authUser?.profilePhoto
-                : selectedUser?.profilePhoto
-            }
-          />
-        </div>
-      </div>
+      <img
+        alt="profile"
+        src={isMyMessage ? authUser?.profilePhoto : selectedUser?.profilePhoto}
+        onError={(e) => {
+          e.target.src =
+            "https://api.dicebear.com/9.x/adventurer/svg?seed=default";
+        }}
+      />
 
       <div className="chat-header">
         <time className="text-xs opacity-50 text-white">
@@ -41,9 +37,7 @@ const Message = ({ message }) => {
 
       <div
         className={`chat-bubble ${
-          message?.senderId === authUser?._id
-            ? "bg-green-400 text-white"
-            : "bg-gray-200 text-black"
+          isMyMessage ? "bg-green-400 text-white" : "bg-gray-200 text-black"
         }`}
       >
         {message?.message}

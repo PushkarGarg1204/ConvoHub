@@ -10,8 +10,9 @@ import "./index.css";
 import HomePage from "./components/HomePage";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import App from "./App";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <App />
       <Toaster />
     </Provider>
   </React.StrictMode>,

@@ -9,6 +9,12 @@ const OtherUser = ({ user }) => {
 
   const isOnline = onlineUsers?.includes(user._id);
 
+  // Debug Logs
+  console.log("User:", user.fullName);
+  console.log("User ID:", user._id);
+  console.log("Online Users:", onlineUsers);
+  console.log("isOnline:", isOnline);
+
   const selectedUserHandler = () => {
     dispatch(setSelectedUser(user));
   };
@@ -23,7 +29,7 @@ const OtherUser = ({ user }) => {
             : "text-white hover:bg-zinc-200 hover:text-black"
         }`}
       >
-        <div className={`avatar ${isOnline ? "online" : ""}`}>
+        <div className={`avatar ${isOnline ? "avatar-online" : ""}`}>
           <div className="w-12 rounded-full">
             <img
               src={user.profilePhoto}
