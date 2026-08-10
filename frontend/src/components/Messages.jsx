@@ -7,11 +7,12 @@ import useGetRealTimeMessage from "../hooks/useGetRealTimeMessage";
 const Messages = () => {
   useGetMessages();
   useGetRealTimeMessage();
+
   const { messages = [] } = useSelector((store) => store.message);
 
   return (
     <div className="px-4 flex-1 overflow-auto">
-      {messages?.map((message) => (
+      {messages.map((message) => (
         <Message key={message._id} message={message} />
       ))}
     </div>
