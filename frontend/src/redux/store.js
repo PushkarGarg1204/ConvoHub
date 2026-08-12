@@ -1,14 +1,65 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./userSlice";
-import messageReducer from "./messageSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+
+import userReducer from "./userSlice.js";
+import messageReducer from "./messageSlice.js";
 import socketReducer from "./socketSlice.js";
 
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-    message: messageReducer,
-    socket: socketReducer,
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+
+const storage = {
+  getItem: (key) => Promise.resolve(localStorage.getItem(key)),
+
+  setItem: (key, value) => {
+    localStorage.setItem(key, value);
+    return Promise.resolve();
   },
+
+  removeItem: (key) => {
+    localStorage.removeItem(key);
+    return Promise.resolve();
+  },
+};
+
+console.log("REDUX PERSIST STORAGE:", storage);
+console.log("getItem:", typeof storage?.getItem);
+console.log("setItem:", typeof storage?.setItem);
+console.log("removeItem:", typeof storage?.removeItem);
+
+const rootReducer = combineReducers({
+  user: userReducer,
+  message: messageReducer,
+  socket: socketReducer,
 });
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+  whitelist: ["user"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
+export const persistor = persistStore(store);
 
 export default store;

@@ -1,51 +1,41 @@
 import React, { useEffect } from "react";
-import { RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { io } from "socket.io-client";
 
-import { router } from "./main";
-import { BASE_URL } from "./utils/constants";
+import { socket } from "./socket";
 import { setOnlineUsers } from "./redux/userSlice";
-import { setSocket } from "./redux/socketSlice";
 
 const App = () => {
   const dispatch = useDispatch();
 
   const { authUser } = useSelector((store) => store.user);
-  const { socket } = useSelector((store) => store.socket);
 
   useEffect(() => {
-    if (authUser) {
-      const socketio = io(BASE_URL, {
-        query: {
-          userId: authUser._id,
-        },
-      });
-
-      dispatch(setSocket(socketio));
-
-      socketio.on("getOnlineUsers", (onlineUsers) => {
-        console.log("Received Online Users:", onlineUsers);
-        dispatch(setOnlineUsers(onlineUsers));
-      });
-
-      return () => {
-        socketio.close();
-        dispatch(setSocket(null));
-      };
-    } else {
-      if (socket) {
-        socket.close();
-        dispatch(setSocket(null));
-      }
+    if (!authUser?._id) {
+      socket.disconnect();
+      dispatch(setOnlineUsers([]));
+      return;
     }
-  }, [authUser, dispatch]);
 
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <RouterProvider router={router} />
-    </div>
-  );
+    socket.io.opts.query = {
+      userId: authUser._id,
+    };
+
+    socket.connect();
+
+    const handleOnlineUsers = (onlineUsers) => {
+      dispatch(setOnlineUsers(onlineUsers));
+    };
+
+    socket.on("getOnlineUsers", handleOnlineUsers);
+
+    return () => {
+      socket.off("getOnlineUsers", handleOnlineUsers);
+      socket.disconnect();
+      dispatch(setOnlineUsers([]));
+    };
+  }, [authUser?._id, dispatch]);
+
+  return null;
 };
 
 export default App;
