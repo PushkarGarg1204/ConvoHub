@@ -17,15 +17,6 @@ const SendInput = () => {
 
     if (!message.trim()) return;
 
-    // DEBUG
-    console.log("========== SEND MESSAGE DEBUG ==========");
-    console.log("Auth User Name:", authUser?.fullName);
-    console.log("Auth User ID:", authUser?._id);
-    console.log("Selected User Name:", selectedUser?.fullName);
-    console.log("Selected User ID:", selectedUser?._id);
-    console.log("Message:", message);
-    console.log("========================================");
-
     try {
       const res = await axios.post(
         `${BASE_URL}/api/v1/message/send/${selectedUser?._id}`,

@@ -29,22 +29,6 @@ const Login = () => {
         },
       );
 
-      // ================= LOGIN DEBUG =================
-      console.log("========== LOGIN DEBUG ==========");
-
-      console.log("Complete response:", res);
-
-      console.log("Response data:", res.data);
-
-      console.log("Response data type:", typeof res.data);
-
-      console.log("Response data keys:", Object.keys(res.data));
-
-      console.log("Username entered:", user.username);
-
-      console.log("=================================");
-      // ===============================================
-
       // IMPORTANT:
       // Let's see exactly what your backend returns
       console.log("AUTH USER BEING STORED:", res.data);

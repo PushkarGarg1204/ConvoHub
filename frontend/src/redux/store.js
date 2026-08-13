@@ -29,11 +29,6 @@ const storage = {
   },
 };
 
-console.log("REDUX PERSIST STORAGE:", storage);
-console.log("getItem:", typeof storage?.getItem);
-console.log("setItem:", typeof storage?.setItem);
-console.log("removeItem:", typeof storage?.removeItem);
-
 const rootReducer = combineReducers({
   user: userReducer,
   message: messageReducer,

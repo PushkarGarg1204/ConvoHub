@@ -33,12 +33,6 @@ export const sendMessage = async (req, res) => {
     // SOCKET IO
     const receiverSocketId = getReceiverSocketId(receiverId);
 
-    console.log("========== SOCKET MESSAGE DEBUG ==========");
-    console.log("Sender ID:", senderId);
-    console.log("Receiver ID:", receiverId);
-    console.log("Receiver Socket ID:", receiverSocketId);
-    console.log("==========================================");
-
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("newMessage", newMessage);
     }
