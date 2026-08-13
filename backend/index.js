@@ -14,15 +14,16 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
 
-//middlewares
+// middlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
 // routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
