@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Messages from "./Messages";
-import SendInput from "./SendInput";
+import SendInput from "./sendInput";
 
 const MessageContainer = () => {
   const { selectedUser, authUser, onlineUsers } = useSelector(
