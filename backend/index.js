@@ -19,12 +19,6 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
-  console.log("REQUEST:", req.method, req.url);
-  console.log("ORIGIN:", req.headers.origin);
-  next();
-});
-
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
